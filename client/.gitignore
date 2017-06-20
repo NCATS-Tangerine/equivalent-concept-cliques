@@ -21,7 +21,6 @@ target/
 build/
 docs/
 gradle/
-src/
 .swagger-codegen-ignore
 .travis.yml
 build.gradle
