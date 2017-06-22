@@ -1,0 +1,54 @@
+swagger: '2.0'
+info:
+  title: Translator Knowledge Beacon Equivalent Concept Clique API
+  version: 1.0.0
+  contact:
+    responsibleDeveloper: Richard Bruskiewich
+    responsibleOrganization: NCATS
+    url: 'https://ncats.nih.gov/translator'
+    email: richard@starinformatics.com
+  description: >
+    This is the Translator Knowledge Beacon "equivalent concept clique" web service application programming
+    interface (API). 
+    See the [tk beacon github repo for more information](https://github.com/NCATS-Tangerine/translator-knowledge-beacon/).
+schemes:
+  - http
+produces:
+  - application/json
+tags:
+  - name: exactmatches
+    description: >-
+      Queries for exactly matching concepts *sensa*-SKOS;
+      http://www.w3.org/2004/02/skos/core#exactMatch
+paths:
+  '/exactmatches/{conceptId}':
+    get:
+      description: >
+        Retrieves a list of qualified identifiers of "exact match" concepts,
+        [sensa SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) associated with a
+        specified (url-encoded) CURIE (without brackets) concept object identifier, 
+        typically, of a concept selected from the list of concepts originally returned by a
+        /concepts API call on a given KS. 
+      tags:
+        - exactmatches
+      parameters:
+        - name: conceptId
+          in: path
+          description: (url-encoded) CURIE identifier of the concept to be matched
+          required: true
+          type: string
+      operationId: getExactMatchesToConcept
+      responses:
+        '200':
+          description: >
+            Successful response returns a set of
+            [CURIE](https://www.w3.org/TR/curie/) identifiers to 3rd party
+            concepts defined outside of the local KS, which are deemed semantic
+            exact matches [*sensa*-SKOS](http://www.w3.org/2004/02/skos/core#exactMatch) to  the specified identified concept (maybe an empty set?)
+          schema:
+            type: array
+            items:
+              type: string
+          examples:
+            application/json:
+              [ 'wd:Q14883734', 'NCBIGene:7486' ]
