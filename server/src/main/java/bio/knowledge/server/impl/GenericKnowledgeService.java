@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import bio.knowledge.client.ApiClient;
 
 public class GenericKnowledgeService {
 	
-	final String aggregatorBasePath = "http://localhost:8090";
+	@Value("${aggregator.url}")
+	String aggregatorBasePath;
 
 	protected <T> CompletableFuture<List<T>> query(SupplierBuilder<T> builder) {
 		
